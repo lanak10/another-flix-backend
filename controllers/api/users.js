@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const create = async (req, res) => {
     try {
         const createdUser = await User.create(req.body)
-        res.status(200).json(createdUser)
+        res.status(200).json(createJWT(createdUser))
     } catch(e) {
         res.status(400).json({msg: e.message})
     }
@@ -73,7 +73,7 @@ const getFavorites = async (req, res) => {
 
 // Helper Function
 // JWT is created with a secret key and that secret key is private to you which means you will never reveal that to the public or inject inside the JWT token.
-const createJWT = user => {
+function createJWT (user) {
     return jwt.sign(
         // payload
         {user}, 
